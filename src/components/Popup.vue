@@ -1,12 +1,17 @@
 <template>
-  <div v-if="isOpen" class="backdrop" @click="close">
-    <div class="popup" @click.stop>
-      <h1>Attention</h1>
-      <hr />
-      <slot></slot>
-      <hr />
-      <div class="footer">
-        <slot name="actions" :close="close" :confirm="confirm"> </slot>
+  <div class="box" v-if="isOpen">
+    <div class="modal-container" @click="close">
+      <div class="modal" @click.stop>
+        <h1 class="modal__title">Cookies</h1>
+        <div class="modal__text">
+          <img
+            width="30"
+            src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png"
+            alt="cookies-img"
+          />
+          <span> Confirm eating a cookie</span>
+        </div>
+        <slot name="actions" :close="close" :confirm="confirm"></slot>
       </div>
     </div>
   </div>
@@ -53,27 +58,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.popup {
-  top: 50px;
-  padding: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  position: fixed;
-  z-index: 10;
-  background-color: white;
-}
-
-.backdrop {
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-}
-</style>
