@@ -1,5 +1,14 @@
 <template>
-  <button @click="openPopup">Open window</button>
+  <button
+    type="button"
+    class="link-1"
+    id="m1-c"
+    @click="openPopup"
+    :class="{ 'opacity-50': isPopupOpen }"
+    :disabled="isPopupOpen"
+  >
+    Open
+  </button>
   <Popup
     :is-open="isPopupOpen"
     @ok="popupConfirmed"
@@ -7,14 +16,21 @@
   >
     You opened the modal.
     <template #actions="{ confirm }">
-      Write
       <input
+        class="modal__btn"
         type="text"
         :placeholder="$options.CONFIRMATION_TEXT"
         v-model="confirmation"
       />
       &nbsp;
-      <button :disabled="!isConfirmationCorrect" @click="confirm">Ok</button>
+      <button
+        class="modal__btn"
+        :class="{ 'opacity-50': !isConfirmationCorrect }"
+        :disabled="!isConfirmationCorrect"
+        @click="confirm"
+      >
+        Ok &rarr;
+      </button>
     </template>
   </Popup>
 </template>
@@ -47,7 +63,6 @@ export default {
     },
 
     popupConfirmed() {
-      alert("Confirmed");
       this.isPopupOpen = false;
     },
   },
