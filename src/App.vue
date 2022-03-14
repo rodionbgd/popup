@@ -3,19 +3,14 @@
     type="button"
     class="link-1"
     id="m1-c"
-    @click="openPopup"
+    @click="popupConfirmed"
     :class="{ 'opacity-50': isPopupOpen }"
     :disabled="isPopupOpen"
   >
     Open
   </button>
-  <Popup
-    :is-open="isPopupOpen"
-    @ok="popupConfirmed"
-    @close="isPopupOpen = false"
-  >
-    You opened the modal.
-    <template #actions="{ confirm }">
+  <Popup ref="popup">
+    <template #actions="{ close, confirm }">
       <input
         class="modal__btn"
         type="text"
@@ -31,6 +26,7 @@
       >
         Ok &rarr;
       </button>
+      <button class="modal__btn link-2" @click="close"></button>
     </template>
   </Popup>
 </template>
@@ -57,13 +53,15 @@ export default {
   },
 
   methods: {
-    openPopup() {
+    async popupConfirmed() {
       this.isPopupOpen = true;
       this.confirmation = "";
-    },
 
-    popupConfirmed() {
+      const result = await this.$refs.popup.open();
       this.isPopupOpen = false;
+      if (result) {
+        alert("Stop eating!");
+      }
     },
   },
 };

@@ -21,18 +21,13 @@
 export default {
   name: "Popup",
 
-  props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
+  data() {
+    return {
+      isOpen: false,
+    };
   },
 
-  emits: {
-    ok: null,
-    close: null,
-  },
-
+  confirmedPopupPromise: null,
   mounted() {
     document.addEventListener("keydown", this.closeByEsc);
   },
@@ -42,12 +37,24 @@ export default {
   },
 
   methods: {
-    close() {
-      this.$emit("close");
+    open() {
+      let resolve;
+      const popupPromise = new Promise((ok) => {
+        resolve = ok;
+      });
+      this.isOpen = true;
+      this.$options.confirmedPopupPromise = { resolve };
+      return popupPromise;
     },
 
     confirm() {
-      this.$emit("ok");
+      this.$options.confirmedPopupPromise.resolve(true);
+      this.isOpen = false;
+    },
+
+    close() {
+      this.$options.confirmedPopupPromise.resolve(false);
+      this.isOpen = false;
     },
 
     closeByEsc(e) {

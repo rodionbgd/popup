@@ -134,3 +134,35 @@ button::-moz-focus-inner {
             0 0 0 .4rem var(--global-background),
             0 0 0 .5rem var(--focus);
 }
+
+.link-2 {
+    width: 4rem;
+    height: 4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 100rem;
+
+    color: inherit;
+    font-size: 2.2rem;
+
+    position: absolute;
+    top: -2rem;
+    right: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: .2s;
+}
+
+.link-2::before {
+    content: '×';
+    transform: translateY(-.1rem);
+}
+
+.link-2:hover,
+.link-2:focus {
+    background: var(--focus);
+    border-color: var(--focus);
+    transform: translateY(-.2rem);
+}
